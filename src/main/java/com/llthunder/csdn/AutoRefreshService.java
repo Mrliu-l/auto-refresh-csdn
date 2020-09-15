@@ -37,6 +37,7 @@ public class AutoRefreshService {
         // 获取id=asideCategory的标签下的ul标签的a标签===>这个标签的href存放的就是分类专栏地址
         Elements as = ultag.get(0).getElementsByTag("a");
         //遍历a标签，获取a标签中的href属性值
+        allArticleUrl.clear();
         as.stream().forEach(a -> {
             String href = a.attr("href");
             if (!href.isEmpty()) {
@@ -65,7 +66,6 @@ public class AutoRefreshService {
         //2、 获取专栏中所有文章的li元素
         Elements li_s = column_article_list.get(0).getElementsByTag("li");
         //3、并行流处理，遍历获取文章url
-        allArticleUrl.clear();
         li_s.parallelStream().forEach((li) -> {
             String href = li.getElementsByTag("a").attr("href");
             if (!href.isEmpty()) {
