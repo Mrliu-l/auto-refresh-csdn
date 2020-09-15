@@ -65,6 +65,7 @@ public class AutoRefreshService {
         //2、 获取专栏中所有文章的li元素
         Elements li_s = column_article_list.get(0).getElementsByTag("li");
         //3、并行流处理，遍历获取文章url
+        allArticleUrl.clear();
         li_s.parallelStream().forEach((li) -> {
             String href = li.getElementsByTag("a").attr("href");
             if (!href.isEmpty()) {
