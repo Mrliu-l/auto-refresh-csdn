@@ -78,18 +78,22 @@ public class AutoRefreshService {
         this.getAllArticleUrl();
         long i = 1;
         while (true){
-            System.out.println("第" + i + "遍访问开始");
-            allArticleUrl.parallelStream().forEach(articleUrl -> {
-                ResponseEntity<String> forEntity = new RestTemplate().getForEntity(articleUrl, String.class);
-                String msg = forEntity.getStatusCode() == HttpStatus.OK ? "访问成功" :  "访问失败";
-                System.out.println(articleUrl + msg);
-            });
-            System.out.println("第" + i + "遍访问结束");
-            TimeUnit.SECONDS.sleep(sleepSecondNum);
-            if(i % 10 == 0){
-                this.getAllArticleUrl();
+            try {
+                System.out.println("第" + i + "遍访问开始");
+                allArticleUrl.parallelStream().forEach(articleUrl -> {
+                    ResponseEntity<String> forEntity = new RestTemplate().getForEntity(articleUrl, String.class);
+                    String msg = forEntity.getStatusCode() == HttpStatus.OK ? "访问成功" :  "访问失败";
+                    System.out.println(articleUrl + msg);
+                });
+                System.out.println("第" + i + "遍访问结束");
+                TimeUnit.SECONDS.sleep(sleepSecondNum);
+                if(i % 10 == 0){
+                    this.getAllArticleUrl();
+                }
+                i++;
+            }catch (Exception e){
+                System.out.println(e.getMessage());
             }
-            i++;
         }
     }
 }
